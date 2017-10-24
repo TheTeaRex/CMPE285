@@ -17,28 +17,29 @@ def get_user_input():
 
 def print_outputs(outputs):
     print '----------PROFIT REPORT----------'
-    print 'Proceeds: ${0:.2f}'.format(outputs['proceeds'])
-    print 'Cost: ${0:.2f}'.format(outputs['cost'])
+    print 'Proceeds: ${:.2f}'.format(outputs['proceeds'])
+    print 'Cost: ${:.2f}'.format(outputs['cost'])
     print 'Total Purchase Price: {} X ${} = ${}'.format(
         outputs['allotment'],
         outputs['final_price'],
         outputs['total_purchase_price']
     )
-    print 'Buy Commission: ${0:.2f}'.format(outputs['buy_comm'])
-    print 'Sell Commission: ${0:.2f}'.format(outputs['sell_comm'])
-    print 'Tax on Captial Gain: {}% of ${} = ${}'.format(
+    print 'Buy Commission: ${:.2f}'.format(outputs['buy_comm'])
+    print 'Sell Commission: ${:.2f}'.format(outputs['sell_comm'])
+    print 'Tax on Captial Gain: {}% of ${:.2f} = ${:.2f}'.format(
         outputs['tax'],
         outputs['cap_gain'],
         outputs['cap_gain'] * outputs['tax'] / 100
     )
-    print 'Net Profit: ${0:.2f}'.format(outputs['net_profit'])
-    print 'Return of Investment: {0:.2f}%'.format(outputs['roi'] * 100)
-    print 'Break even price per share: ${0:.2f}'.format(outputs['even'])
+    print 'Net Profit: ${:.2f}'.format(outputs['net_profit'])
+    print 'Return of Investment: {:.2f}%'.format(outputs['roi'] * 100)
+    print 'Break even price per share: ${:.2f}'.format(outputs['even'])
 
 @click.group(invoke_without_command=True)
 def main():
     outputs = {}
     inputs = get_user_input()
+    # merging the two dictionaries
     outputs.update(inputs)
     outputs['proceeds'] = inputs['allotment'] * inputs['final_price']
     outputs['total_purchase_price'] = inputs['allotment'] + inputs['initial_price']
@@ -48,7 +49,7 @@ def main():
     outputs['net_profit'] = outputs['proceeds'] - outputs['cost']
     outputs['roi'] = (outputs['proceeds'] - outputs['cost']) / outputs['cost']
     outputs['even'] = cost / inputs['allotment']
-    print outputs
+    # print outputs
     print_outputs(outputs)
 
 if __name__ == '__main__':
