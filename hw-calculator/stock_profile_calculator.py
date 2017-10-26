@@ -29,26 +29,33 @@ def print_outputs(outputs):
     print 'Tax on Captial Gain: {}% of ${:.2f} = ${:.2f}'.format(
         outputs['tax'],
         outputs['cap_gain'],
-        outputs['cap_gain'] * outputs['tax'] / 100
+        outputs['tax_on_cap_gain']
     )
     print 'Net Profit: ${:.2f}'.format(outputs['net_profit'])
     print 'Return of Investment: {:.2f}%'.format(outputs['roi'] * 100)
     print 'Break even price per share: ${:.2f}'.format(outputs['even'])
 
-@click.group(invoke_without_command=True)
-def main():
+def process_data(inputs):
     outputs = {}
-    inputs = get_user_input()
     # merging the two dictionaries
     outputs.update(inputs)
     outputs['proceeds'] = inputs['allotment'] * inputs['final_price']
     outputs['total_purchase_price'] = inputs['allotment'] + inputs['initial_price']
     cost = inputs['allotment'] * inputs['initial_price'] + inputs['sell_comm'] + inputs['buy_comm']
     outputs['cap_gain'] = outputs['proceeds'] - cost
-    outputs['cost'] = (outputs['cap_gain'] * inputs['tax'] / 100.00) + cost
+    outputs['tax_on_cap_gain'] = outputs['cap_gain'] * inputs['tax'] / 100.00
+    outputs['cost'] = outputs['tax_on_cap_gain'] + cost
     outputs['net_profit'] = outputs['proceeds'] - outputs['cost']
     outputs['roi'] = (outputs['proceeds'] - outputs['cost']) / outputs['cost']
     outputs['even'] = cost / inputs['allotment']
+    return outputs
+
+@click.group(invoke_without_command=True)
+def main():
+    inputs = get_user_input()
+
+    outputs = process_data(inputs)
+
     # print outputs
     print_outputs(outputs)
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Python Stock Profile Calculator</title>
+</head>
+<body>
+  <h1>
+    Stock Profile Calculator Result
+  </h1>
+  <p>
+    <h3>----------Profit Report----------</h3>
+    <br>
+    <b>Proceeds:</b> {{ proceeds }}
+    <br>
+    <b>Costs:</b> {{ cost }}
+    <br>
+    <b>Total Purchase Price:</b> {{ allotment }} X ${{ final_price }} = ${{ total_purchase_price }}
+    <br>
+    <b>Buy Commission:</b> {{ buy_comm }}
+    <br>
+    <b>Sell Commission:</b> {{ sell_comm }}
+    <br>
+    <b>Tax on Capital Gain:</b> {{ tax }}% of ${{ cap_gain }} = ${{ tax_on_cap_gain }}
+    <br>
+    <b>Net Profit:</b> ${{ net_profit }}
+    <br>
+    <b>Return of Investment:</b> {{ roi }}%
+    <br>
+    <b>Break even price per share:</b> ${{ even }}
+  </p>
+  <p><a href="{{ url_for('index') }}">Back</a></p>
+</body>
+</html>
