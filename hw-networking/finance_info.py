@@ -16,12 +16,12 @@ def get_current_date_and_time():
     now = datetime.datetime.now(pytz.timezone('America/Los_Angeles'))
     return now.strftime('%a %b %d %H:%M:%S %Z %Y')
 
-def print_info(info):
+def print_info(info, sym):
     if info.get_name() is None:
         click.echo(click.style('Symbol: {} not valid'.format(info.get_name()), fg='yellow'))
         return
     click.echo('{}'.format(get_current_date_and_time()))
-    click.echo(info.get_name())
+    click.echo('{} ({})'.format(info.get_name(), sym.upper()))
     change = '+' if info.get_change() >= 0 else '-'
     click.echo('{price} {price_change} ({percent_change})'.format(price=info.get_price(),
                                                                   price_change=info.get_change(),
@@ -29,7 +29,8 @@ def print_info(info):
 
 @click.group(invoke_without_command=True)
 def main():
-    while(True):
+    again = True
+    while(again):
         sym = get_symbol_from_user()
         try:
             info = get_finance_info(sym)
@@ -37,7 +38,9 @@ def main():
             click.echo(click.style('URL Error: {}'.format(e), fg='red'))
             click.echo()
             continue
-        print_info(info)
+        print_info(info, sym)
+        click.echo()
+        again = click.confirm('Would you like to try again?')
         click.echo()
 
 if __name__ == '__main__':
