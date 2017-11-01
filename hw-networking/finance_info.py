@@ -34,11 +34,9 @@ def main():
         sym = get_symbol_from_user()
         try:
             info = get_finance_info(sym)
+            print_info(info, sym)
         except urllib2.URLError as e:
-            click.echo(click.style('URL Error: {}'.format(e), fg='red'))
-            click.echo()
-            continue
-        print_info(info, sym)
+            click.echo(click.style('There is a networking issue right now, please try again later.', fg='red'))
         click.echo()
         again = click.confirm('Would you like to try again?')
         click.echo()
