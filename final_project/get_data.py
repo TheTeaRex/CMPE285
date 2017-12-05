@@ -2,9 +2,14 @@ from pandas_datareader import data as pdr
 import fix_yahoo_finance as yf
 import datetime
 import pytz
+import requests
 
 
 yf.pdr_override()
+
+
+class NoInternetConnection(Exception):
+    pass
 
 
 class NoSuchTicker(Exception):
@@ -30,7 +35,10 @@ def get_range(symbol, start=None, end=None):
     if start is None or end is None:
         start = get_current_date()
         end = get_tomorrow_date()
-    data = pdr.get_data_yahoo(symbol, start=start, end=end)
+    try:
+        data = pdr.get_data_yahoo(symbol, start=start, end=end)
+    except requests.exceptions.ConnectionError as e:
+        raise NoInternetConnection()
     if len(data) == 0:
         raise NoSuchTicker('Invalid Ticker: {}'.format(symbol.upper()))
     return data
@@ -48,5 +56,3 @@ def parse_data(data):
         item['volume'] = row['Volume']
         result.append(item)
     return result
-
-print parse_data(get_range('PSTG', start='2017-11-1', end='2017-12-1'))
