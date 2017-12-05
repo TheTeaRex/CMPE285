@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Python Portfolio Suggestion Engine</title>
+</head>
+<body>
+  <h1>
+    Python Portfolio Suggestion
+  </h1>
+
+  {% if not error %}
+    <p>
+      Not an error
+    </p>
+  {% else %}
+    <p>ERROR</p>
+  {% endif %}
+  <p><a href="{{ url_for('index') }}">Back</a></p>
+</body>
+</html>
