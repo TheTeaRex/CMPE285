@@ -2,56 +2,91 @@
 <html lang="en">
 <head>
   <title>Stock Portfolio Suggestion Engine</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for("static",filename="styles.css") }}">
 </head>
 <body>
   <h1>
     Stock Portfolio Suggestion
   </h1>
-  <form action="{{ url_for('process') }}" method="post">
+  <form action="{{ url_for("process") }}" method="post">
     <table>
       <tr>
         <td>
-          Dollar Amound to Invest:
+          <p>
+            <b>
+              Dollar Amound to Invest:
+            </b>
+          </p>
         </td>
         <td>
-          <input type="number" name="invest_amt" step="0.01" min="5000" value='5000.00' autofocus required>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Please select 1 or 2 strategies:
-        </td>
-        <td>
-          <label><input type="checkbox" name="e_invest">Ethical Investing</label>
+          <p>
+            <input type="number" name="invest_amt" step="0.01" min="5000" value="5000.00" autofocus required>
+          </p>
         </td>
       </tr>
       <tr>
         <td>
+          <p>
+            <b>
+              Please select 1 or 2 strategies:
+            </b>
+          </p>
         </td>
         <td>
-          <label><input type="checkbox" name="g_invest">Growth Investing</label>
-        </td>
-      </tr>
-      <tr>
-        <td>
-        </td>
-        <td>
-          <label><input type="checkbox" name="i_invest">Index Investing</label>
-        </td>
-      </tr>
-      <tr>
-        <td>
-        </td>
-        <td>
-          <label><input type="checkbox" name="q_invest">Quality Investing</label>
+          <label><p><input type="checkbox" name="e_invest">Ethical Investing</p></label>
+          <ul>
+            <li><label><p>Apple: <input type="number" name="apple" step="0.01" value="50.00" required>%</p></label></li>
+            <li><label><p>Adobe: <input type="number" name="adobe" step="0.01" value="25.00" required>%</p></label></li>
+            <li><label><p>Nestle: <input type="number" name="nestle" step="0.01" value="25.00" required>%</p></label></li>
+          </ul>
         </td>
       </tr>
       <tr>
         <td>
         </td>
         <td>
-          <label><input type="checkbox" name="v_invest">Value Investing</label>
+          <label><p><input type="checkbox" name="g_invest">Growth Investing</p></label>
+          <ul>
+            <li><label><p>Amazon: <input type="number" name="amazon" step="0.01" value="25.00" required>%</p></label></li>
+            <li><label><p>Netflix: <input type="number" name="netflix" step="0.01" value="25.00" required>%</p></label></li>
+            <li><label><p>Tesla: <input type="number" name="tesla" step="0.01" value="50.00" required>%</p></label></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+          <label><p><input type="checkbox" name="i_invest">Index Investing</p></label>
+          <ul>
+            <li><label><p>Microsoft: <input type="number" name="microsoft" step="0.01" value="33.00" required>%</p></label></li>
+            <li><label><p>Nvidia: <input type="number" name="nvidia" step="0.01" value="33.00" required>%</p></label></li>
+            <li><label><p>Walmart: <input type="number" name="walmart" step="0.01" value="34.00" required>%</p></label></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+          <label><p><input type="checkbox" name="q_invest">Quality Investing</p></label>
+          <ul>
+            <li><label><p>General Electric: <input type="number" name="general_electric" step="0.01" value="20.00" required>%</p></label></li>
+            <li><label><p>The Home Depot: <input type="number" name="home_depot" step="0.01" value="20.00" required>%</p></label></li>
+            <li><label><p>Mcdonald"s: <input type="number" name="mcdonalds" step="0.01" value="40.00" required>%</p></label></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+          <label><p><input type="checkbox" name="v_invest">Value Investing</p></label>
+          <ul>
+            <li><label><p>Johnson &amp; Johnson: <input type="number" name="johnson" step="0.01" value="30.00" required>%</p></label></li>
+            <li><label><p>Activision Blizzard: <input type="number" name="blizzard" step="0.01" value="40.00" required>%</p></label></li>
+            <li><label><p>Disney: <input type="number" name="disney" step="0.01" value="30.00" required>%</p></label></li>
+          </ul>
         </td>
       </tr>
       <tr>

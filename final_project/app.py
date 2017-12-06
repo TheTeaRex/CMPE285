@@ -11,6 +11,23 @@ def index():
 def process():
     errors = []
     investments = ['e_invest', 'g_invest', 'i_invest', 'q_invest', 'v_invest']
+    translation = {
+        'apple': 'appl',
+        'adobe': 'adbe',
+        'nestle': 'nsrgy',
+        'amazon': 'amzn',
+        'netflix': 'nflx',
+        'tesla': 'tsla',
+        'microsoft': 'msft',
+        'nvidia': 'nvda',
+        'walmart': 'wmt',
+        'general_electric': 'ge',
+        'home_depot': 'hd',
+        'mcdonalds': 'mcd',
+        'johnson': 'jnj',
+        'blizzard': 'atvi',
+        'disney': 'dis'
+    }
     inputs = {}
     inputs['amount'] = float(request.form['invest_amt'])
     inputs['e_invest'] = request.form.get('e_invest')
