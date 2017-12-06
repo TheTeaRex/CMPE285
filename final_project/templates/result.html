@@ -2,18 +2,26 @@
 <html lang="en">
 <head>
   <title>Python Portfolio Suggestion Engine</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
 </head>
 <body>
   <h1>
     Python Portfolio Suggestion
   </h1>
 
-  {% if not error %}
+  {% if errors|length == 0 %}
     <p>
       Not an error
     </p>
   {% else %}
-    <p>ERROR</p>
+  <p>
+    Please fix the following error:
+    <ul class="error">
+      {% for error in errors %}
+        <li>{{error}}</li>
+      {% endfor %}
+    </ul>
+  </p>
   {% endif %}
   <p><a href="{{ url_for('index') }}">Back</a></p>
 </body>
