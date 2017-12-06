@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <title>Stock Portfolio Suggestion Engine</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
 </head>
 <body>
   <h1>
@@ -14,7 +15,7 @@
           Dollar Amound to Invest:
         </td>
         <td>
-          <input type="number" name="invest_amt" step="0.01" min="5000" autofocus required>
+          <input type="number" name="invest_amt" step="0.01" min="5000" value='5000.00' autofocus required>
         </td>
       </tr>
       <tr>
@@ -22,35 +23,35 @@
           Please select 1 or 2 strategies:
         </td>
         <td>
-          <label><input type="checkbox" name="investment" value="e_invest">Ethical Investing</label>
+          <label><input type="checkbox" name="e_invest">Ethical Investing</label>
         </td>
       </tr>
       <tr>
         <td>
         </td>
         <td>
-          <label><input type="checkbox" name="investment" value="g_invest">Growth Investing</label>
+          <label><input type="checkbox" name="g_invest">Growth Investing</label>
         </td>
       </tr>
       <tr>
         <td>
         </td>
         <td>
-          <label><input type="checkbox" name="investment" value="i_invest">Index Investing</label>
+          <label><input type="checkbox" name="i_invest">Index Investing</label>
         </td>
       </tr>
       <tr>
         <td>
         </td>
         <td>
-          <label><input type="checkbox" name="investment" value="q_invest">Quality Investing</label>
+          <label><input type="checkbox" name="q_invest">Quality Investing</label>
         </td>
       </tr>
       <tr>
         <td>
         </td>
         <td>
-          <label><input type="checkbox" name="investment" value="v_invest">Value Investing</label>
+          <label><input type="checkbox" name="v_invest">Value Investing</label>
         </td>
       </tr>
       <tr>
