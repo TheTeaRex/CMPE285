@@ -9,3 +9,16 @@
 td {
   vertical-align: top;
 }
+
+.resulttable {
+  border-collapse: collapse;
+}
+
+.resultcell {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+
+.resultrow:nth-child(even) {
+  background-color: #dddddd;
+}

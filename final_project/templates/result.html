@@ -10,18 +10,27 @@
   </h1>
 
   {% if errors|length == 0 %}
-    <p>
-      Not an error
-    </p>
-  {% else %}
-  <p>
-    Please fix the following error:
-    <ul class="error">
-      {% for error in errors %}
-        <li>{{error}}</li>
+    <table class="resulttable">
+      <tr class="resultrow">
+        <th class="resultcell">Stock</th>
+        <th class="resultcell">Current Price</th>
+      </tr>
+      {% for stock in cur_prices %}
+        <tr class="resultrow">
+          <td class="resultcell">{{stock}}</td>
+          <td class="resultcell">${{cur_prices[stock]}}</td>
+        </tr>
       {% endfor %}
-    </ul>
-  </p>
+    </table>
+  {% else %}
+    <p>
+      Please fix the following error(s):
+      <ul class="error">
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </p>
   {% endif %}
   <p><a href="{{ url_for('index') }}">Back</a></p>
 </body>
