@@ -68,12 +68,11 @@ def process():
 
     data = {}
     purchase_now = {}
-    purchase_5 = {}
-    purchase_10 = {}
-    total_5 = 0
-    total_10 = 0
-    purchase_20 = {}
-    total_20 = 0
+    purchase = {}
+    total = {}
+    profit = {}
+    percent = {}
+    look_back = [5, 10 ,20]
     for stock in distribution:
         key = translation[stock]['name']
         # getting the stock price
@@ -91,60 +90,35 @@ def process():
         purchase_now[key]['amt_dist'] = amount * distribution[stock] / 100
         purchase_now[key]['share'] = int(purchase_now[key]['amt_dist'] / data[key][-1]['close'])
 
-        # calculate the dollar distribution if bought 5 business days ago
-        purchase_5[key] = {}
-        purchase_5[key]['distribution'] = distribution[stock]
-        purchase_5[key]['old_price'] = data[key][-5]['close']
-        purchase_5[key]['amt_dist'] = amount * distribution[stock] / 100
-        purchase_5[key]['share'] = int(purchase_5[key]['amt_dist'] / data[key][-5]['close'])
-        purchase_5[key]['cur_price'] = data[key][-1]['close']
-        purchase_5[key]['cur_value'] = data[key][-1]['close'] * purchase_5[key]['share']
-        total_5 += purchase_5[key]['cur_value']
+    for day in look_back:
+        # calculate the dollar distribution if bought x business days ago
+        total[day] = 0
+        purchase[day] = {}
 
-        # calculate the dollar distribution if bought 10 business days ago
-        purchase_10[key] = {}
-        purchase_10[key]['distribution'] = distribution[stock]
-        purchase_10[key]['old_price'] = data[key][-10]['close']
-        purchase_10[key]['amt_dist'] = amount * distribution[stock] / 100
-        purchase_10[key]['share'] = int(purchase_10[key]['amt_dist'] / data[key][-10]['close'])
-        purchase_10[key]['cur_price'] = data[key][-1]['close']
-        purchase_10[key]['cur_value'] = data[key][-1]['close'] * purchase_10[key]['share']
-        total_10 += purchase_10[key]['cur_value']
+        for stock in distribution:
+            key = translation[stock]['name']
+            purchase[day][key] = {}
+            purchase[day][key]['distribution'] = distribution[stock]
+            purchase[day][key]['old_price'] = data[key][-day]['close']
+            purchase[day][key]['amt_dist'] = amount * distribution[stock] / 100
+            purchase[day][key]['share'] = int(purchase[day][key]['amt_dist'] / data[key][-day]['close'])
+            purchase[day][key]['cur_price'] = data[key][-1]['close']
+            purchase[day][key]['cur_value'] = data[key][-1]['close'] * purchase[day][key]['share']
+            total[day] += purchase[day][key]['cur_value']
 
-        # calculate the dollar distribution if bought 20 business days ago
-        purchase_20[key] = {}
-        purchase_20[key]['distribution'] = distribution[stock]
-        purchase_20[key]['old_price'] = data[key][-20]['close']
-        purchase_20[key]['amt_dist'] = amount * distribution[stock] / 200
-        purchase_20[key]['share'] = int(purchase_20[key]['amt_dist'] / data[key][-20]['close'])
-        purchase_20[key]['cur_price'] = data[key][-1]['close']
-        purchase_20[key]['cur_value'] = data[key][-1]['close'] * purchase_20[key]['share']
-        total_20 += purchase_20[key]['cur_value']
-
-    profit_5 = total_5 - amount
-    percent_5 = profit_5 / amount
-    profit_10 = total_10 - amount
-    percent_10 = profit_10 / amount
-    profit_20 = total_20 - amount
-    percent_20 = profit_20 / amount
+        profit[day] = total[day] - amount
+        percent[day] = profit[day] / amount
 
     return render_template('result.html',
                             errors=[],
                             amount=amount,
                             data=data,
                             purchase_now=purchase_now,
-                            purchase_5=purchase_5,
-                            total_5=total_5,
-                            profit_5=profit_5,
-                            percent_5=percent_5,
-                            purchase_10=purchase_10,
-                            total_10=total_10,
-                            profit_10=profit_10,
-                            percent_10=percent_10,
-                            purchase_20=purchase_20,
-                            total_20=total_20,
-                            profit_20=profit_20,
-                            percent_20=percent_20)
+                            look_back=look_back,
+                            purchase=purchase,
+                            total=total,
+                            profit=profit,
+                            percent=percent)
 
 
 if __name__=='__main__':

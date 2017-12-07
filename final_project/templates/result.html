@@ -42,101 +42,40 @@
       {% endfor %}
     </table>
     <hr>
-    <h3>If purchase 5 business days ago with ${{'{:.2f}'.format(amount)}}</h3>
-    <table class="resulttable">
-      <tr class="resultrow">
-        <th class="resultcell">Stock</th>
-        <th class="resultcell">Purchase Price</th>
-        <th class="resultcell">Distribution</th>
-        <th class="resultcell">Amount Distributed</th>
-        <th class="resultcell">Share Purchased</th>
-        <th class="resultcell">Current Price</th>
-        <th class="resultcell">Current Value</th>
-      </tr>
-      {% for stock in purchase_5 %}
-        <tr class="resultrow">
-          <td class="resultcell">{{stock}}</td>
-          <td class="resultcell">{{'{:.2f}'.format(purchase_5[stock]['old_price'])}}</td>
-          <td class="resultcell">{{'{:.2f}'.format(purchase_5[stock]['distribution'])}}%</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_5[stock]['amt_dist'])}}</td>
-          <td class="resultcell">{{purchase_5[stock]['share']}}</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_5[stock]['cur_price'])}}</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_5[stock]['cur_value'])}}</td>
-        </tr>
-      {% endfor %}
-      <tr class="resultrow">
-        <th class="resultcell colspan" colspan="6">Total Value</td>
-        <td class="resultcell">${{'{:.2f}'.format(total_5)}}</td>
-      </tr>
-      <tr class="resultrow">
-        <th class="resultcell colspan" colspan="6">Total Gain</td>
-        <td class="resultcell">${{'{:.2f}'.format(profit_5)}} ({{'{:.2f}'.format(percent_5)}}%)</td>
-      </tr>
-    </table>
-    <hr>
-    <h3>If purchase 10 business days ago with ${{'{:.2f}'.format(amount)}}</h3>
-    <table class="resulttable">
-      <tr class="resultrow">
-        <th class="resultcell">Stock</th>
-        <th class="resultcell">Purchase Price</th>
-        <th class="resultcell">Distribution</th>
-        <th class="resultcell">Amount Distributed</th>
-        <th class="resultcell">Share Purchased</th>
-        <th class="resultcell">Current Price</th>
-        <th class="resultcell">Current Value</th>
-      </tr>
-      {% for stock in purchase_10 %}
-        <tr class="resultrow">
-          <td class="resultcell">{{stock}}</td>
-          <td class="resultcell">{{'{:.2f}'.format(purchase_10[stock]['old_price'])}}</td>
-          <td class="resultcell">{{'{:.2f}'.format(purchase_10[stock]['distribution'])}}%</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_10[stock]['amt_dist'])}}</td>
-          <td class="resultcell">{{purchase_10[stock]['share']}}</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_10[stock]['cur_price'])}}</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_10[stock]['cur_value'])}}</td>
-        </tr>
-      {% endfor %}
-      <tr class="resultrow">
-        <th class="resultcell colspan" colspan="6">Total Value</td>
-        <td class="resultcell">${{'{:.2f}'.format(total_10)}}</td>
-      </tr>
-      <tr class="resultrow">
-        <th class="resultcell colspan" colspan="6">Total Gain</td>
-        <td class="resultcell">${{'{:.2f}'.format(profit_10)}} ({{'{:.2f}'.format(percent_10)}}%)</td>
-      </tr>
-    </table>
-    <hr>
-    <h3>If purchase 20 business days ago with ${{'{:.2f}'.format(amount)}}</h3>
-    <table class="resulttable">
-      <tr class="resultrow">
-        <th class="resultcell">Stock</th>
-        <th class="resultcell">Purchase Price</th>
-        <th class="resultcell">Distribution</th>
-        <th class="resultcell">Amount Distributed</th>
-        <th class="resultcell">Share Purchased</th>
-        <th class="resultcell">Current Price</th>
-        <th class="resultcell">Current Value</th>
-      </tr>
-      {% for stock in purchase_20 %}
-        <tr class="resultrow">
-          <td class="resultcell">{{stock}}</td>
-          <td class="resultcell">{{'{:.2f}'.format(purchase_20[stock]['old_price'])}}</td>
-          <td class="resultcell">{{'{:.2f}'.format(purchase_20[stock]['distribution'])}}%</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_20[stock]['amt_dist'])}}</td>
-          <td class="resultcell">{{purchase_20[stock]['share']}}</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_20[stock]['cur_price'])}}</td>
-          <td class="resultcell">${{'{:.2f}'.format(purchase_20[stock]['cur_value'])}}</td>
-        </tr>
-      {% endfor %}
-      <tr class="resultrow">
-        <th class="resultcell colspan" colspan="6">Total Value</td>
-        <td class="resultcell">${{'{:.2f}'.format(total_20)}}</td>
-      </tr>
-      <tr class="resultrow">
-        <th class="resultcell colspan" colspan="6">Total Gain</td>
-        <td class="resultcell">${{'{:.2f}'.format(profit_20)}} ({{'{:.2f}'.format(percent_20)}}%)</td>
-      </tr>
-    </table>
+    {% for day in look_back %}
+      <h3>If purchase {{day}} business days ago with ${{'{:.2f}'.format(amount)}}</h3>
+        <table class="resulttable">
+          <tr class="resultrow">
+            <th class="resultcell">Stock</th>
+            <th class="resultcell">Purchase Price</th>
+            <th class="resultcell">Distribution</th>
+            <th class="resultcell">Amount Distributed</th>
+            <th class="resultcell">Share Purchased</th>
+            <th class="resultcell">Current Price</th>
+            <th class="resultcell">Current Value</th>
+          </tr>
+          {% for stock in purchase[day] %}
+            <tr class="resultrow">
+              <td class="resultcell">{{stock}}</td>
+              <td class="resultcell">{{'{:.2f}'.format(purchase[day][stock]['old_price'])}}</td>
+              <td class="resultcell">{{'{:.2f}'.format(purchase[day][stock]['distribution'])}}%</td>
+              <td class="resultcell">${{'{:.2f}'.format(purchase[day][stock]['amt_dist'])}}</td>
+              <td class="resultcell">{{purchase[day][stock]['share']}}</td>
+              <td class="resultcell">${{'{:.2f}'.format(purchase[day][stock]['cur_price'])}}</td>
+              <td class="resultcell">${{'{:.2f}'.format(purchase[day][stock]['cur_value'])}}</td>
+            </tr>
+          {% endfor %}
+          <tr class="resultrow">
+            <th class="resultcell colspan" colspan="6">Total Value</td>
+            <td class="resultcell">${{'{:.2f}'.format(total[day])}}</td>
+          </tr>
+          <tr class="resultrow">
+            <th class="resultcell colspan" colspan="6">Total Gain</td>
+            <td class="resultcell">${{'{:.2f}'.format(profit[day])}} ({{'{:.2f}'.format(percent[day])}}%)</td>
+          </tr>
+        </table>
+        <hr>
+    {% endfor %}
   {% else %}
     <p>
       Please fix the following error(s):
