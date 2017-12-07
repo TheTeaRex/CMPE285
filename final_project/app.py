@@ -65,14 +65,20 @@ def process():
         if count != 100:
             return render_template('result.html', errors=['Please make sure all stocks in an investment strategy add up to 100%'])
 
-    cur_prices = {}
+    data = {}
     for stock in distribution:
-        cur_prices[translation[stock]['name']] = get_data.parse_data(get_data.get_range(translation[stock]['ticker']))[-1]['close']
-        cur_prices[translation[stock]['name']] = float('{:.2f}'.format(cur_prices[translation[stock]['name']]))
+        data[translation[stock]['name']] = get_data.parse_data(
+            get_data.get_range(
+                translation[stock]['ticker'],
+                start=get_data.get_x_days_back(10),
+                end=get_data.get_current_date()
+            )
+        )
 
+    print data
     return render_template('result.html',
                             errors=[],
-                            cur_prices=cur_prices)
+                            data=data)
 
 
 if __name__=='__main__':

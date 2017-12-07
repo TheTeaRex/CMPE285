@@ -15,10 +15,10 @@
         <th class="resultcell">Stock</th>
         <th class="resultcell">Current Price</th>
       </tr>
-      {% for stock in cur_prices %}
+      {% for stock in data %}
         <tr class="resultrow">
           <td class="resultcell">{{stock}}</td>
-          <td class="resultcell">${{cur_prices[stock]}}</td>
+          <td class="resultcell">${{'{:.2f}'.format(data[stock][-1]['close'])}}</td>
         </tr>
       {% endfor %}
     </table>

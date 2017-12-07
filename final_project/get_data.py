@@ -31,6 +31,10 @@ def get_tomorrow_date():
     tomorrow = get_datetime_now() + datetime.timedelta(days=1)
     return tomorrow.strftime('%Y-%m-%d')
 
+def get_x_days_back(days):
+    old = get_datetime_now() - datetime.timedelta(days=days)
+    return old.strftime('%Y-%m-%d')
+
 def get_range(symbol, start=None, end=None):
     if start is None or end is None:
         start = get_current_date()
