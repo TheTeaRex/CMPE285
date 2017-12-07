@@ -22,3 +22,7 @@ td {
 .resultrow:nth-child(even) {
   background-color: #dddddd;
 }
+
+.colspan {
+  text-align: right;
+}
