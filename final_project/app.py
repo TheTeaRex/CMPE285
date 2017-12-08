@@ -68,6 +68,7 @@ def process():
 
     data = {}
     purchase_now = {}
+    total_now = 0
     purchase = {}
     total = {}
     profit = {}
@@ -89,6 +90,7 @@ def process():
         purchase_now[key]['distribution'] = distribution[stock]
         purchase_now[key]['amt_dist'] = amount * distribution[stock] / 100
         purchase_now[key]['share'] = int(purchase_now[key]['amt_dist'] / data[key][-1]['close'])
+        total_now += purchase_now[key]['share'] * data[key][-1]['close']
 
     for day in look_back:
         # calculate the dollar distribution if bought x business days ago
@@ -114,6 +116,7 @@ def process():
                             amount=amount,
                             data=data,
                             purchase_now=purchase_now,
+                            total_now=total_now,
                             look_back=look_back,
                             purchase=purchase,
                             total=total,

@@ -31,6 +31,7 @@
         <th class="resultcell">Distribution</th>
         <th class="resultcell">Amount Distributed</th>
         <th class="resultcell">Share Purchased</th>
+        <th class="resultcell">Current Price</th>
       </tr>
       {% for stock in purchase_now %}
         <tr class="resultrow">
@@ -38,8 +39,13 @@
           <td class="resultcell">{{'{:.2f}'.format(purchase_now[stock]['distribution'])}}%</td>
           <td class="resultcell">${{'{:.2f}'.format(purchase_now[stock]['amt_dist'])}}</td>
           <td class="resultcell">{{purchase_now[stock]['share']}}</td>
+          <td class="resultcell">${{'{:.2f}'.format(data[stock][-1]['close'])}}</td>
         </tr>
       {% endfor %}
+      <tr class="resultrow">
+        <th class="resultcell colspan" colspan="4">Total Value</td>
+        <td class="resultcell">${{'{:.2f}'.format(total_now)}}</td>
+      </tr>
     </table>
     <hr>
     {% for day in look_back %}
@@ -70,7 +76,7 @@
             <td class="resultcell">${{'{:.2f}'.format(total[day])}}</td>
           </tr>
           <tr class="resultrow">
-            <th class="resultcell colspan" colspan="6">Total Gain</td>
+            <th class="resultcell colspan" colspan="6">Total Gain/Loss</td>
             <td class="resultcell">${{'{:.2f}'.format(profit[day])}} ({{'{:.2f}'.format(percent[day])}}%)</td>
           </tr>
         </table>
