@@ -36,6 +36,7 @@ def process():
     }
     inputs = {}
     amount = float(request.form['invest_amt'])
+    days = request.form['days']
     selected = {}
     count = 0
     for investment in investments:
@@ -73,7 +74,11 @@ def process():
     total = {}
     profit = {}
     percent = {}
-    look_back = [5, 10 ,20]
+    look_back = [5, 10]
+
+    if days != '':
+        look_back.append(int(days))
+
     for stock in distribution:
         key = translation[stock]['name']
         # getting the stock price
@@ -110,6 +115,8 @@ def process():
 
         profit[day] = total[day] - amount
         percent[day] = profit[day] / amount
+
+    print days
 
     return render_template('result.html',
                             errors=[],
