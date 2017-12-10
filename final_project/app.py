@@ -37,6 +37,10 @@ def process():
     inputs = {}
     amount = float(request.form['invest_amt'])
     days = request.form['days']
+    if days != '':
+        days = int(days)
+    else:
+        days = 0
     selected = {}
     count = 0
     for investment in investments:
@@ -76,19 +80,35 @@ def process():
     percent = {}
     look_back = [5, 10]
 
-    if days != '':
-        look_back.append(int(days))
+    if days != 0:
+        look_back.append(days)
+
+    days_look_back = ((days / 365) + 2) * 114 + days
+    print days_look_back
 
     for stock in distribution:
         key = translation[stock]['name']
-        # getting the stock price
-        data[key] = get_data.parse_data(
-            get_data.get_range(
-                translation[stock]['ticker'],
-                start=get_data.get_x_days_back(30),
-                end=get_data.get_current_date()
-            )
-        )
+
+        i = 0
+        while 1:
+            try:
+                # getting the stock price
+                data[key] = get_data.parse_data(
+                    get_data.get_range(
+                        translation[stock]['ticker'],
+                        start=get_data.get_x_days_back(days_look_back),
+                        end=get_data.get_current_date()
+                    )
+                )
+            except get_data.NoSuchTicker:
+                # try only 4 times
+                if i == 4:
+                    raise
+                else:
+                    i += 1
+                    continue
+            if key in data:
+                break
 
         # calculate the dollar distribution if bought at this momnet
         purchase_now[key] = {}
@@ -115,8 +135,6 @@ def process():
 
         profit[day] = total[day] - amount
         percent[day] = profit[day] / amount
-
-    print days
 
     return render_template('result.html',
                             errors=[],
