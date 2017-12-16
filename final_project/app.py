@@ -1,11 +1,22 @@
 from flask import Flask, render_template, request
 import get_data
+from datetime import datetime
+import matplotlib.pyplot as plt
+
+
 app = Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
+
+@app.route('/chart')
+def chart():
+    dt = datetime.now()
+    version = dt.strftime("%s")
+    return render_template('chart.html',
+                           version = version)
 
 @app.route('/process', methods=['POST'])
 def process():
@@ -117,6 +128,7 @@ def process():
         purchase_now[key]['share'] = int(purchase_now[key]['amt_dist'] / data[key][-1]['close'])
         total_now += purchase_now[key]['share'] * data[key][-1]['close']
 
+
     for day in look_back:
         # calculate the dollar distribution if bought x business days ago
         total[day] = 0
@@ -135,6 +147,40 @@ def process():
 
         profit[day] = total[day] - amount
         percent[day] = profit[day] / amount
+
+
+
+    #plot weekly history graph
+    x = []
+    y = []
+    history_purchase = {}
+    history_total = {}
+    history_day = [1,2,3,4,5]
+    for day in history_day:
+        # calculate the dollar distribution if bought x business days ago
+        history_total[day] = 0
+        history_purchase[day] = {}
+
+        for stock in distribution:
+            key = translation[stock]['name']
+            history_purchase[day][key] = {}
+            history_purchase[day][key]['distribution'] = distribution[stock]
+            history_purchase[day][key]['old_price'] = data[key][-day]['close']
+            history_purchase[day][key]['amt_dist'] = amount * distribution[stock] / 100
+            history_purchase[day][key]['share'] = int(history_purchase[day][key]['amt_dist'] / data[key][-day]['close'])
+            history_purchase[day][key]['cur_price'] = data[key][-1]['close']
+            history_purchase[day][key]['cur_value'] = data[key][-1]['close'] * history_purchase[day][key]['share']
+            history_total[day] += history_purchase[day][key]['cur_value']
+
+        x.append(day)
+        y.append(history_total[day])
+    plt.figure()
+    plt.plot(y)
+    plt.xticks(range(len(x)), x)
+    plt.xlabel('Look back days')
+    plt.ylabel('Portfolio total value (USD)')
+    plt.savefig('./static/MyFig.png')
+
 
     return render_template('result.html',
                             errors=[],
